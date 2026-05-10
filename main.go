@@ -1,23 +1,24 @@
 package main
 
-import {
+import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
-}
+)
 
 func main() {
 	m := http.NewServeMux()
 
-	m.HandleFinc("/", handlePage)
+	m.HandleFunc("/", handlePage)
 
-	const port = "8010"
+	port := os.Getenv("PORT")
 	srv := http.Server{
-		Handler: m,
-		Addr: ":" + port,
+		Handler:      m,
+		Addr:         ":" + port,
 		WriteTimeout: 30 * time.Second,
-		ReadTimeout: 30 * time.Second,
+		ReadTimeout:  30 * time.Second,
 	}
 
 	// this blocks forever, until the server
